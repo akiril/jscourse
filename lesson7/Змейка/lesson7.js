@@ -8,7 +8,18 @@ var gameIsRunning = false; // Запущена ли игра
 var snake_timer; // Таймер змейки
 var food_timer; // Таймер для еды
 let block_timer;
-var score = 0; // Результат
+let pointerCount = new Counter();
+
+function Counter() {
+    let count = 0;
+
+    this.up = function() {
+        return ++count;
+    };
+    this.now = function() {
+        return count;
+    };
+}
 
 function init() {
     prepareGameField(); // Генерация поля
@@ -203,8 +214,8 @@ function haveFood(unit) {
         check = true;
         createFood();
 
-        score++;
-        document.querySelector('.snake-score').textContent = "score : " + score;
+        //score++;
+        document.querySelector('.snake-score').textContent = "score : " + pointerCount.up();
     }
     return check;
 }
@@ -298,7 +309,7 @@ function finishTheGame() {
     gameIsRunning = false;
     clearInterval(snake_timer);
     clearInterval(block_timer);// не создавать блоки после завершения
-    alert('Вы проиграли! Ваш результат: ' + score.toString());
+    alert('Вы проиграли! Ваш результат: ' + pointerCount.now());
 }
 
 /**
